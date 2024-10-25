@@ -2,8 +2,11 @@
 #include <HTTPClient.h>
 #include <Update.h>
 
-const char* ssid = "FAMÍLIA MATTOS"; // SSID da rede Wi-Fi
-const char* password = "1498877676l"; // Senha da rede Wi-Fi
+//const char* ssid = "FAMÍLIA MATTOS"; // SSID da rede Wi-Fi
+//const char* password = "1498877676l"; // Senha da rede Wi-Fi
+const char* ssid = "shirou_2GHz"; // SSID da rede Wi-Fi
+const char* password = "T@fStor3"; // Senha da rede Wi-Fi
+
 const char* firmware_url = "https://raw.githubusercontent.com/Wesleymattos/ota_test/refs/heads/main/ota_exemplo.ino.bin"; // URL do arquivo binário
 
 bool wifiConnected = false; // Variável para monitorar a conexão Wi-Fi
@@ -11,6 +14,19 @@ bool wifiConnected = false; // Variável para monitorar a conexão Wi-Fi
 void setup() {
   Serial.begin(115200); // Inicia a comunicação serial
 }
+
+
+void contarEReiniciar() {
+    for (int i = 1; i <= 5; i++) {
+        Serial.println(i);  // Imprime o número atual
+        delay(1000);        // Espera 1 segundo (1000 milissegundos)
+    }
+    Serial.println("Reiniciando o ESP32...");
+    delay(2000); // Aguarda 2 segundos antes de reiniciar
+    esp_restart(); // Reinicia o ESP32
+}
+
+
 
 void updateFirmware() {
   HTTPClient http;
@@ -36,7 +52,7 @@ void updateFirmware() {
         if (Update.end()) {
           if (Update.isFinished()) {
             Serial.println("Atualização concluída. Reiniciando...");
-            ESP.restart(); // Reinicia o ESP32
+            contarEReiniciar();
           } else {
             Serial.println("Erro: atualização não foi finalizada.");
           }
